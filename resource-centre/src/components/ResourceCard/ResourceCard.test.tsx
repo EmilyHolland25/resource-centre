@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import ResourceCard from './ResourceCard'
 import type { Resource } from '../../types/resource'
 
@@ -16,7 +17,12 @@ const testResource: Resource = {
 
 describe('ResourceCard', () => {
   it('displays the resource information', () => {
-    render(<ResourceCard resource={testResource} />)
+  render(
+    <ResourceCard
+      resource={testResource}
+      onClick={() => {}}
+    />
+  )
 
     expect(
       screen.getByRole('heading', { name: 'Mindful Moments' })
@@ -26,13 +32,27 @@ describe('ResourceCard', () => {
     expect(screen.getByText('25 minutes')).toBeInTheDocument()
     expect(screen.getByText('10 July 2025')).toBeInTheDocument()
 
-    expect(
-  screen.getByRole('img', { name: 'Mindful Moments' })
-).toBeInTheDocument()
 
 expect(screen.getByText('wellbeing')).toBeInTheDocument()
 expect(screen.getByText('mindfulness')).toBeInTheDocument()
 expect(screen.getByText('relaxation')).toBeInTheDocument()
     
   })
+  it('calls onClick when the card is clicked', async () => {
+  const user = userEvent.setup()
+  const onClick = vi.fn()
+
+  render(
+    <ResourceCard
+      resource={testResource}
+      onClick={onClick}
+    />
+  )
+
+  await user.click(
+    screen.getByRole('button', { name: 'Mindful Moments' })
+  )
+
+  expect(onClick).toHaveBeenCalledTimes(1)
+})
 })

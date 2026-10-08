@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import App from './App'
 
 describe('App', () => {
@@ -64,6 +65,30 @@ describe('App', () => {
 
   expect(
     screen.getByRole('heading', { name: 'Meditation' })
+  ).toBeInTheDocument()
+})
+
+it('opens resource details when a resource is clicked', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  await user.click(
+    screen.getByRole('button', { name: 'Mindful Moments' })
+  )
+
+  const dialog = screen.getByRole('dialog')
+
+  expect(dialog).toBeInTheDocument()
+
+  expect(
+    within(dialog).getByRole('heading', { name: 'Mindful Moments' })
+  ).toBeInTheDocument()
+
+  expect(
+    within(dialog).getByText(
+      'A calming podcast focused on mindfulness techniques for daily life.'
+    )
   ).toBeInTheDocument()
 })
 })
