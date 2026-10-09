@@ -108,4 +108,169 @@ it('returns focus to the resource card when the details dialog closes', async ()
 
   expect(resourceCard).toHaveFocus()
 })
+it('filters resources by title as the user types', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const searchInput = screen.getByRole('searchbox', {
+    name: /search resources/i,
+  })
+
+  await user.type(searchInput, 'sleep')
+
+  expect(
+    screen.getByRole('button', { name: 'The Science of Sleep' })
+  ).toBeInTheDocument()
+
+  expect(
+    screen.queryByRole('button', { name: 'Mindful Moments' })
+  ).not.toBeInTheDocument()
+})
+it('filters resources by tag as the user types', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const searchInput = screen.getByRole('searchbox', {
+    name: /search resources/i,
+  })
+
+  await user.type(searchInput, 'mindfulness')
+
+  expect(
+    screen.getByRole('button', { name: 'Mindful Moments' })
+  ).toBeInTheDocument()
+
+  expect(
+    screen.queryByRole('button', { name: 'The Science of Sleep' })
+  ).not.toBeInTheDocument()
+})
+
+it('sorts resources alphabetically by category', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  await user.selectOptions(
+    screen.getByRole('combobox', { name: /sort by/i }),
+    'category'
+  )
+
+const categoryHeadings = screen
+  .getAllByRole('heading', { level: 2 })
+  .filter((heading) =>
+    [
+      'Articles',
+      'Fitness',
+      'Meditation',
+      'Newsletters',
+      'Podcasts',
+      'Recipes',
+    ].includes(heading.textContent ?? '')
+  )
+  .map((heading) => heading.textContent)
+
+expect(categoryHeadings).toEqual([
+  'Articles',
+  'Fitness',
+  'Meditation',
+  'Newsletters',
+  'Podcasts',
+  'Recipes',
+])
+})
+it('displays resources by date with the newest first', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  await user.selectOptions(
+    screen.getByRole('combobox', { name: /sort by/i }),
+    'date-newest'
+  )
+
+  const resourceButtons = screen
+    .getAllByRole('button')
+    .filter((button) =>
+      [
+        'Mindful Moments',
+        'The Science of Sleep',
+        'Wellness Weekly',
+        'Energy Boost Smoothie',
+        '10-Minute Morning Stretch',
+        'Guided Meditation for Stress Relief',
+      ].includes(button.getAttribute('aria-label') ?? '')
+    )
+
+  expect(resourceButtons.map((button) => button.getAttribute('aria-label'))).toEqual([
+    '10-Minute Morning Stretch',
+    'Wellness Weekly',
+    'Guided Meditation for Stress Relief',
+    'Energy Boost Smoothie',
+    'Mindful Moments',
+    'The Science of Sleep',
+  ])
+})
+it('displays resources by date with the oldest first', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  await user.selectOptions(
+    screen.getByRole('combobox', { name: /sort by/i }),
+    'date-oldest'
+  )
+
+  const resourceButtons = screen
+    .getAllByRole('button')
+    .filter((button) =>
+      [
+        'Mindful Moments',
+        'The Science of Sleep',
+        'Wellness Weekly',
+        'Energy Boost Smoothie',
+        '10-Minute Morning Stretch',
+        'Guided Meditation for Stress Relief',
+      ].includes(button.getAttribute('aria-label') ?? '')
+    )
+
+  expect(
+    resourceButtons.map((button) => button.getAttribute('aria-label'))
+  ).toEqual([
+    'The Science of Sleep',
+    'Mindful Moments',
+    'Energy Boost Smoothie',
+    'Guided Meditation for Stress Relief',
+    'Wellness Weekly',
+    '10-Minute Morning Stretch',
+  ])
+})
+it('searches resources and sorts the matching results by newest first', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  await user.type(
+    screen.getByRole('searchbox', { name: /search resources/i }),
+    'sleep'
+  )
+
+  await user.selectOptions(
+    screen.getByRole('combobox', { name: /sort by/i }),
+    'date-newest'
+  )
+
+  expect(
+    screen.getByRole('button', {
+      name: 'The Science of Sleep',
+    })
+  ).toBeInTheDocument()
+
+  expect(
+    screen.queryByRole('button', {
+      name: 'Mindful Moments',
+    })
+  ).not.toBeInTheDocument()
+})
 })
