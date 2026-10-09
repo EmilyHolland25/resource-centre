@@ -1,75 +1,47 @@
-# React + TypeScript + Vite
+Resource Centre
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive React app for browsing wellbeing resources, with:
 
-Currently, two official plugins are available:
+Browse by category — resources grouped alphabetically on first load
+Resource details — click a card to open an accessible modal
+Search — filter resources by title or tags
+Sorting — order resources by category, newest first or oldest first
+Empty search state — helpful message and clear-search button when no results match
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Stack & rationale
+Vite + React + TypeScript — fast development and type-safe components
+Tailwind CSS — responsive layouts and consistent styling
+Vitest + React Testing Library — test components and user interactions
 
-## React Compiler
+Getting started
+npm install
+npm run dev # Start the development server
+npm test # Run tests in watch mode
+Build
+npm run build # Create the production build in /dist
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Key decisions
+Component-based structure — separate resource cards, details modal and grouping utility for maintainability
+Typed resource data — shared interfaces and category types for consistency
+Search and sorting — derived from the resource data to avoid unnecessary state
+Responsive grid — adapts to mobile, tablet and desktop layouts
+Modal accessibility — dialog semantics, initial focus, Escape-to-close, focus trapping and focus restoration
+Consistent design system — Tailwind utilities and a shared colour palette
 
-## Expanding the ESLint configuration
+Tests
+App.test.tsx — resource rendering, search, sorting and empty search state
+ResourceCard.test.tsx — resource information displayed on each card
+ResourceDetails.test.tsx — modal behaviour and keyboard accessibility
+Grouping utility tests — resources grouped correctly by category
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Accessibility
+Labelled search and sorting controls
+Semantic HTML and visible keyboard focus indicators
+Keyboard-accessible resource cards
+Modal with Escape-to-close, focus trapping and focus restoration
+Live announcement for empty search results
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+What I'd do with more time
+Lock background scrolling while the modal is open
+Add image loading states and fallback images
+Carry out further accessibility and cross-browser testing
