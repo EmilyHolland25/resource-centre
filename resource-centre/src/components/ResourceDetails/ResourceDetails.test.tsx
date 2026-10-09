@@ -61,4 +61,66 @@ describe('ResourceDetails', () => {
 
     expect(onClose).toHaveBeenCalledTimes(1)
   })
+
+  it('calls onClose when the Escape key is pressed', async () => { 
+    const user = userEvent.setup() 
+    const onClose = vi.fn() 
+    render( 
+    <ResourceDetails resource={testResource} 
+    onClose={onClose} 
+    /> 
+  ) 
+  await user.keyboard('{Escape}') 
+  expect(onClose).toHaveBeenCalledTimes(1) 
+})
+it('moves focus to the Close button when the dialog opens', () => {
+  const onClose = vi.fn()
+
+  render(
+    <ResourceDetails
+      resource={testResource}
+      onClose={onClose}
+    />
+  )
+
+  expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus()
+})
+it('keeps keyboard focus within the dialog when tabbing from the Close button', async () => {
+  const user = userEvent.setup()
+  const onClose = vi.fn()
+
+  render(
+    <ResourceDetails
+      resource={testResource}
+      onClose={onClose}
+    />
+  )
+
+  const closeButton = screen.getByRole('button', { name: 'Close' })
+
+  closeButton.focus()
+  await user.tab()
+
+  expect(
+  screen.getByRole('dialog').contains(document.activeElement)
+).toBe(true)
+})
+it('keeps focus on Close when Shift+Tab is pressed and it is the only focusable element', async () => {
+  const user = userEvent.setup()
+  const onClose = vi.fn()
+
+  render(
+    <ResourceDetails
+      resource={testResource}
+      onClose={onClose}
+    />
+  )
+
+  const closeButton = screen.getByRole('button', { name: 'Close' })
+
+  closeButton.focus()
+  await user.keyboard('{Shift>}{Tab}{/Shift}')
+
+  expect(closeButton).toHaveFocus()
+})
 })

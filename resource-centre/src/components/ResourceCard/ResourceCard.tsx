@@ -1,8 +1,9 @@
+import type { MouseEvent } from 'react'
 import type { Resource } from '../../types/resource'
 
 interface ResourceCardProps {
   resource: Resource
-  onClick: () => void
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
 function ResourceCard({ resource, onClick }: ResourceCardProps) {

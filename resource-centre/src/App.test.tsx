@@ -91,4 +91,21 @@ it('opens resource details when a resource is clicked', async () => {
     )
   ).toBeInTheDocument()
 })
+it('returns focus to the resource card when the details dialog closes', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const resourceCard = screen.getByRole('button', {
+    name: 'Mindful Moments',
+  })
+
+  await user.click(resourceCard)
+
+  expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus()
+
+  await user.click(screen.getByRole('button', { name: 'Close' }))
+
+  expect(resourceCard).toHaveFocus()
+})
 })

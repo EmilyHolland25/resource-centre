@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import ResourceCard from './components/ResourceCard/ResourceCard'
 import ResourceDetails from './components/ResourceDetails/ResourceDetails'
 import { resources } from './data/resources'
@@ -9,7 +9,11 @@ function App() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(
     null
   )
-
+  const previouslyFocusedElement = useRef<HTMLElement | null>(null)
+function closeResourceDetails() {
+  setSelectedResource(null)
+  previouslyFocusedElement.current?.focus()
+}
   const groupedResources = groupResourcesByCategory(resources)
 
   return (
@@ -25,7 +29,10 @@ function App() {
               <ResourceCard
                 key={resource.id}
                 resource={resource}
-                onClick={() => setSelectedResource(resource)}
+               onClick={(event) => {
+                  previouslyFocusedElement.current = event.currentTarget
+                  setSelectedResource(resource)
+                }}
               />
             ))}
           </section>
@@ -35,7 +42,7 @@ function App() {
       {selectedResource && (
         <ResourceDetails
           resource={selectedResource}
-          onClose={() => setSelectedResource(null)}
+         onClose={closeResourceDetails}
         />
       )}
     </main>
