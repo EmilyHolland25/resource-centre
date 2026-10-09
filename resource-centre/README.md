@@ -1,4 +1,5 @@
-Resource Centre
+Resource Centre - Frontend Tech Task for Junior and Middleweight 
+Developer Role
 
 A responsive React app for browsing wellbeing resources, with:
 
