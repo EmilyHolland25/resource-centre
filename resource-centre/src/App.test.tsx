@@ -273,4 +273,48 @@ it('searches resources and sorts the matching results by newest first', async ()
     })
   ).not.toBeInTheDocument()
 })
+it('shows an empty state when no resources match the search', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  await user.type(
+    screen.getByRole('searchbox', { name: /search resources/i }),
+    'xyz123'
+  )
+
+  expect(
+    screen.getByRole('heading', { name: 'No resources found' })
+  ).toBeInTheDocument()
+
+  expect(
+    screen.getByRole('button', { name: 'Clear search' })
+  ).toBeInTheDocument()
+})
+
+it('clears the search when the clear search button is clicked', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  await user.type(
+    screen.getByRole('searchbox', { name: /search resources/i }),
+    'xyz123'
+  )
+
+  await user.click(
+    screen.getByRole('button', { name: 'Clear search' })
+  )
+
+  expect(
+    screen.getByRole('searchbox', { name: /search resources/i })
+  ).toHaveValue('')
+
+  expect(
+    screen.getByRole('heading', { name: 'Resource Centre' })
+  ).toBeInTheDocument()
+
+  expect(screen.getByRole('button', { name: 'Mindful Moments' }))
+    .toBeInTheDocument()
+})
 })

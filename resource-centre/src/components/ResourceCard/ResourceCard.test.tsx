@@ -29,7 +29,7 @@ describe('ResourceCard', () => {
     ).toBeInTheDocument()
 
     expect(screen.getByText('Podcasts')).toBeInTheDocument()
-    expect(screen.getByText('25 minutes')).toBeInTheDocument()
+    expect(screen.getByText('25 min')).toBeInTheDocument()
     expect(screen.getByText('10 July 2025')).toBeInTheDocument()
 
 
