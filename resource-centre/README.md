@@ -86,4 +86,4 @@ With more time, I would:
 - Lock background scrolling while the modal is open.
 - Add image loading states and fallback images.
 - Carry out further accessibility and cross-browser testing.
-  > > > > > > > Stashed changes
+- Connect resources to an API or CMS
