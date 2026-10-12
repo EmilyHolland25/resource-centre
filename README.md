@@ -2,7 +2,7 @@
 
 A responsive React application for browsing wellbeing resources, with search, sorting and an accessible details modal.
 
-The Resource Centre can be viewed here https://emilyholland25.github.io/recource-centre
+The Resource Centre can be viewed here https://emilyholland25.github.io/resource-centre/
 
 ## Features
 
