@@ -1,4 +1,13 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Filson Soft Bold";
+  src: url("/fonts/Filson-Soft-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Brand colours */
   --color-primary: rgb(36 73 104);
@@ -14,8 +23,8 @@
   --color-button-hover: rgb(211 96 24);
 
   /* Typography */
-  --font-body: Arial, Helvetica, sans-serif;
-  --font-heading: Arial, Helvetica, sans-serif;
+  --font-body: "Quicksand", Helvetica, sans-serif;
+  --font-heading: "Filson Soft Bold", Helvetica, sans-serif;
 
   /* Layout */
   --content-width: 1200px;

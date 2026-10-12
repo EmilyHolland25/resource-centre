@@ -4,7 +4,7 @@ describe('Resource data', () => {
   it('contains all six resource categories', () => {
     const categories = resources.map((resource) => resource.category)
 
-    expect(categories).toHaveLength(6)
+    expect(categories).toHaveLength(18)
 
     expect(categories).toEqual(
       expect.arrayContaining([
