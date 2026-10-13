@@ -44,7 +44,7 @@ function ResourceCard({ resource, onClick }: ResourceCardProps) {
           {resource.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-md bg-slate-100 px-2 py-1 text-xs text-slate-600"
+              className="rounded-md bg-slate-300 px-2 py-1 text-xs text-slate-600"
             >
               {tag}
             </span>

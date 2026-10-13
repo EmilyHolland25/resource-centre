@@ -88,16 +88,16 @@ const dialogRef = useRef<HTMLDivElement>(null)
         className="mb-6 aspect-[16/9] w-full rounded-xl object-cover"
       />
 
-      <span className="inline-block rounded-full bg-[#e5f4f5] px-3 py-1 text-sm font-semibold text-[rgb(36,73,104)]">
+      <span className="inline-block rounded-full bg-slate-300 px-3 py-1 text-sm font-semibold text-[rgb(36,73,104)]">
         {resource.category}
       </span>
 
-      <h2
+      <h3
         id="resource-title"
         className="mb-4 mt-4 text-2xl font-bold text-[rgb(36,73,104)] sm:text-3xl"
       >
         {resource.title}
-      </h2>
+      </h3>
 
       <p className="mb-6 leading-7 text-slate-600">
         {resource.description}
@@ -127,7 +127,7 @@ const dialogRef = useRef<HTMLDivElement>(null)
         {resource.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-lg bg-slate-100 px-3 py-2 text-sm text-slate-600"
+            className="rounded-lg bg-slate-300 px-3 py-2 text-sm text-slate-600"
           >
             {tag}
           </span>
